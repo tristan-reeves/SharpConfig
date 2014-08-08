@@ -1,0 +1,4 @@
+SharpConfig
+===========
+
+Easy configuration
