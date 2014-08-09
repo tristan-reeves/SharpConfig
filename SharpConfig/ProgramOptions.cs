@@ -21,150 +21,16 @@
 // THE SOFTWARE.
 // 
 // 
+
 using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SharpConfig.TopLevel
+namespace SharpConfig
 {
     public class ProgramOptions
     {
-        private string m_OutputTransform = @"\.template\.=>.{env}.";
-        private string m_FileMask = @"*.template.*";
-        private string m_BaseDirectory = @"";
-        private string m_ConfigSource = @"ConfigValues.csv";
-        private char m_CsvQuoteChar = '"';
-        private char m_CsvDelimiter = ',';
-        private string m_OutputDirectory = ".";
-        private string m_DefaultEnvironment = "dev";
-        private string m_Verbosity = "quiet";
-
-        public string OutputTransform
-        {
-            get { return m_OutputTransform; }
-        }
-
-        public string FileMask
-        {
-            get { return m_FileMask; }
-        }
-
-        public string BaseDirectory
-        {
-            get { return m_BaseDirectory; }
-        }
-
-        public string ConfigSource
-        {
-            get { return m_ConfigSource; }
-        }
-
-        public char CsvQuoteChar
-        {
-            get { return m_CsvQuoteChar; }
-        }
-
-        public char CsvDelimiter
-        {
-            get { return m_CsvDelimiter; }
-        }
-
-        public string OutputDirectory
-        {
-            get { return m_OutputDirectory; }
-        }
-
-        public string DefaultEnvironment
-        {
-            get { return m_DefaultEnvironment; }
-        }
-
-        public string Verbosity
-        {
-            get { return m_Verbosity; }
-        }
-
-        public string GetFullConfigurationSource()
-        {
-            var baseDir = GetFullBaseDirectory();
-            return Path.Combine(baseDir, ConfigSource);
-        }
-        public string GetFullBaseDirectory()
-        {
-            if (Path.IsPathRooted(BaseDirectory)) return BaseDirectory;
-            return Path.Combine(Environment.CurrentDirectory, BaseDirectory);
-        }
-        public string GetOutputFileForInputFile(string inputFile, string environment)
-        {
-            var ndx = this.OutputTransform.IndexOf("=>");
-            var regex = this.OutputTransform.Substring(0, ndx);
-            var replace = this.OutputTransform.Substring(ndx + 2, this.OutputTransform.Length - (ndx + 2)).Replace("{env}", environment);
-
-            var inputFilenameWithoutDirectory = Path.GetFileName(inputFile);
-            var inputDirectory = Path.GetDirectoryName(inputFile);
-
-            var outputFilenameWithoutDirectory = Regex.Replace(inputFilenameWithoutDirectory, regex, replace);
-            var result = Path.Combine(inputDirectory, this.OutputDirectory, outputFilenameWithoutDirectory);
-            return result;
-        }
-        public void CreateOutputDirectory(string inputFile)
-        {
-            var inputDirectory = Path.GetDirectoryName(inputFile);
-            var outputDirectoy = Path.Combine(inputDirectory, this.OutputDirectory);
-            Directory.CreateDirectory(outputDirectoy);
-        }
-
-        public static string ShortUsage()
-        {
-            var result =
-@"usage: EasyConfig.exe [Options].
-For more detail type EasyConfig.exe --help-detailed
-Options are as follows:
-
---help
-Prints this message.
-
---output-transform [pattern] 
-default = '\.template\.=>.<env>.'
-Specifies the form of output files.
-
---file-mask [pattern] 
-default = '*.template.*'
-Specifies what files to apply configuration to.
-
---base-directory [relative or absolute directory] 
-default = ''
-Specifies the directory from which other paths are calculated.
-
---config-source [relative or absolute file path] 
-default = 'ConfigValues.csv'
-Specifies the location of the csv file containing the configuration values.
-
---csv-quote [single character]
-default = '""'
-Specifies the character to be used as a quote character in the csv file.
-
---csv-delimiter [single character]                          
-default = ','
-Specifies the character to be used as a delimiter in the csv file.
-
---output-directory [relative directory]
-default = '.'
-Specifies the directory where the output files are written. The directory is relative to the directory containing the input file.
-
---default-environment [string]
-default = 'dev'
-If specified and valid, indicates that the output file corresponding to this environment should be copied to a corresponding file without such an environment in its name.
-For example, web.dev.config->web.config. The directory of the destination file is the same as the directory of the initial input file.
-
---verbosity [quiet|detailed]
-default = 'quiet'
-How much info do you want to see?
-";
-            return result;
-        }
-
         private static ProgramOptions SetValue(string optionName, string optionValue, ProgramOptions options)
         {
             switch (optionName.Trim().ToLower())
@@ -204,7 +70,6 @@ How much info do you want to see?
                     return null;
             }
         }
-
         private static int ConvertToChar(string optionValue)
         {
             if (optionValue.Length == 1) return optionValue[0];
@@ -218,6 +83,150 @@ How much info do you want to see?
             return -1;
         }
 
+        private const string EnvToken = "<env>";
+        private string m_OutputTransform = @"\.template\.=>." + EnvToken + ".";
+        private string m_FileMask = @"*.template.*";
+        private string m_BaseDirectory = @"";
+        private string m_ConfigSource = @"ConfigValues.csv";
+        private char m_CsvQuoteChar = '"';
+        private char m_CsvDelimiter = ',';
+        private string m_OutputDirectory = ".";
+        private string m_DefaultEnvironment = "dev";
+        private string m_Verbosity = "quiet";
+
+        public string OutputTransform
+        {
+            get { return m_OutputTransform; }
+        }
+        public string FileMask
+        {
+            get { return m_FileMask; }
+        }
+        public string BaseDirectory
+        {
+            get { return m_BaseDirectory; }
+        }
+        public string ConfigSource
+        {
+            get { return m_ConfigSource; }
+        }
+        public char CsvQuoteChar
+        {
+            get { return m_CsvQuoteChar; }
+        }
+        public char CsvDelimiter
+        {
+            get { return m_CsvDelimiter; }
+        }
+        public string OutputDirectory
+        {
+            get { return m_OutputDirectory; }
+        }
+        public string DefaultEnvironment
+        {
+            get { return m_DefaultEnvironment; }
+        }
+        public string Verbosity
+        {
+            get { return m_Verbosity; }
+        }
+
+        public string GetFullConfigurationSource()
+        {
+            var baseDir = GetFullBaseDirectory();
+            return Path.Combine(baseDir, ConfigSource);
+        }
+        public string GetFullBaseDirectory()
+        {
+            if (Path.IsPathRooted(BaseDirectory)) return BaseDirectory;
+            return Path.Combine(Environment.CurrentDirectory, BaseDirectory);
+        }
+        public string GetOutputFileForInputFile(string inputFile, string environment)
+        {
+            var ndx = this.OutputTransform.IndexOf("=>");
+            var regex = this.OutputTransform.Substring(0, ndx);
+            var replace = this.OutputTransform.Substring(ndx + 2, this.OutputTransform.Length - (ndx + 2)).Replace(EnvToken, environment);
+
+            var inputFilenameWithoutDirectory = Path.GetFileName(inputFile);
+            var inputDirectory = Path.GetDirectoryName(inputFile);
+
+            var outputFilenameWithoutDirectory = Regex.Replace(inputFilenameWithoutDirectory, regex, replace);
+            var result = Path.Combine(inputDirectory, this.OutputDirectory, outputFilenameWithoutDirectory);
+            return result;
+        }
+        public string GetCopybackOutputFileForInputFile(string inputFile)
+        {
+            var ndx = this.OutputTransform.IndexOf("=>");
+            var regex = this.OutputTransform.Substring(0, ndx);
+            var replace = this.OutputTransform.Substring(ndx + 2, this.OutputTransform.Length - (ndx + 2)).Replace(EnvToken, "");
+
+            var inputFilenameWithoutDirectory = Path.GetFileName(inputFile);
+            var inputDirectory = Path.GetDirectoryName(inputFile);
+
+            var outputFilenameWithoutDirectory = Regex.Replace(inputFilenameWithoutDirectory, regex, replace);
+            while (outputFilenameWithoutDirectory.Contains(".."))
+            {
+                outputFilenameWithoutDirectory = outputFilenameWithoutDirectory.Replace("..", ".");
+            }
+
+            var result = Path.Combine(inputDirectory, outputFilenameWithoutDirectory);
+            return result;
+        }
+        public void CreateOutputDirectory(string inputFile)
+        {
+            var inputDirectory = Path.GetDirectoryName(inputFile);
+            var outputDirectoy = Path.Combine(inputDirectory, this.OutputDirectory);
+            Directory.CreateDirectory(outputDirectoy);
+        }
+
+        public static string ShortUsage()
+        {
+            var result =
+@"usage: SharpConfig.exe [Options]
+Options are as follows:
+
+--help
+Prints this message.
+
+--output-transform [pattern] 
+default = '\.template\.=>." + EnvToken + @".'
+Specifies the form of output files.
+
+--file-mask [pattern] 
+default = '*.template.*'
+Specifies what files to apply configuration to.
+
+--base-directory [relative or absolute directory] 
+default = ''
+Specifies the directory from which other paths are calculated.
+
+--config-source [relative or absolute file path] 
+default = 'ConfigValues.csv'
+Specifies the location of the csv file containing the configuration values.
+
+--csv-quote [single character]
+default = '""'
+Specifies the character to be used as a quote character in the csv file.
+
+--csv-delimiter [single character]                          
+default = ','
+Specifies the character to be used as a delimiter in the csv file.
+
+--output-directory [relative directory]
+default = '.'
+Specifies the directory where the output files are written. The directory is relative to the directory containing the input file.
+
+--default-environment [string]
+default = 'dev'
+If specified and valid, indicates that the output file corresponding to this environment should be copied to a corresponding file without such an environment in its name.
+For example, web.dev.config->web.config. The directory of the destination file is the same as the directory of the initial input file.
+
+--verbosity [quiet|detailed]
+default = 'quiet'
+How much info do you want to see?
+";
+            return result;
+        }
         public static ProgramOptions ParseCommandLine(string[] args)
         {
             try

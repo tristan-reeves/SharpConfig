@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace SharpConfig.Config
 {
-    public interface IConfigurationEnvironments
+    public interface IConfigurationTopLevel
     {
         IConfigurationEnvironment GetEnvironment(string environmentName);
         IEnumerable<string> EnumerateEnvironments();

@@ -33,9 +33,9 @@ using SharpConfig.Csv;
 namespace SharpConfig.UnitTests
 {
     [TestFixture]
-    public class ConfigurationEnvironmentsTests
+    public class ConfigurationTopLevelTests
     {
-        private IConfigurationEnvironments GetDefaultConfigSystem(char quote, char delimiter)
+        private IConfigurationTopLevel GetDefaultConfigSystem(char quote, char delimiter)
         {
             var csv =
     @",dev,uat,""prod""
@@ -46,7 +46,7 @@ qualified.key3,""dev-qualified.key3"",uat-qualified.key3,prod-qualified.key3";
             csv = csv
                 .Replace('"', quote)
                 .Replace(',', delimiter);
-            return new DefaultConfigurationEnvironments(new StringReader(csv), new BasicCsvOptions(false, delimiter, quote));
+            return new DefaultConfigurationTopLevel(new StringReader(csv), new BasicCsvOptions(false, delimiter, quote));
         }
 
         private string GetDefaultText()

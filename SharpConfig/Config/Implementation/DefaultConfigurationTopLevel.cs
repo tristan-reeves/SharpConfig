@@ -28,7 +28,7 @@ using SharpConfig.Csv;
 
 namespace SharpConfig.Config.Implementation
 {
-    public class DefaultConfigurationEnvironments : IConfigurationEnvironments
+    public class DefaultConfigurationTopLevel : IConfigurationTopLevel
     {
         private readonly Dictionary<string, IConfigurationEnvironment> m_Environments = new Dictionary<string, IConfigurationEnvironment>();
 
@@ -67,11 +67,11 @@ namespace SharpConfig.Config.Implementation
             }
         }
 
-        public DefaultConfigurationEnvironments(TextReader csvContents, BasicCsvOptions csvOptions = null)
+        public DefaultConfigurationTopLevel(TextReader csvContents, BasicCsvOptions csvOptions = null)
         {
             ReadCsv(csvContents, csvOptions);
         }
-        public DefaultConfigurationEnvironments(string csvContents, BasicCsvOptions csvOptions = null)
+        public DefaultConfigurationTopLevel(string csvContents, BasicCsvOptions csvOptions = null)
         {
             using (var sr = new StringReader(csvContents))
             {

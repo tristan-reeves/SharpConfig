@@ -21,17 +21,56 @@
 // THE SOFTWARE.
 // 
 // 
+
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
+using SharpConfig.Config;
+using SharpConfig.Config.Implementation;
+using SharpConfig.Csv;
 
 namespace SharpConfig
 {
     class Program
     {
-        static void Main(string[] args)
+        static int MainInternal(string[] args)
         {
+            var options = ProgramOptions.ParseCommandLine(args);
+            if (options == null)
+            {
+                var usage = ProgramOptions.ShortUsage();
+                Console.Write(usage);
+                return 1;
+            }
+
+            var configFile = options.GetFullConfigurationSource();
+            var configContents = File.ReadAllText(configFile);
+
+            var csvOptions = new BasicCsvOptions(ownsTextReader: false, delimiter: options.CsvDelimiter, quote: options.CsvQuoteChar);
+            IConfigurationTopLevel configurationTopLevel = new DefaultConfigurationTopLevel(configContents, csvOptions);
+            var runner = new ProgramRunner(options, configurationTopLevel);
+
+            var baseDir = options.GetFullBaseDirectory();
+            var files = Directory.EnumerateFiles(baseDir, options.FileMask, SearchOption.AllDirectories).ToArray();
+            foreach (var file in files)
+            {
+                runner.Execute(file);
+            }
+
+            return 0;
+        }
+        static int Main(string[] args)
+        {            
+            try
+            {
+                return MainInternal(args);
+            }
+            catch (Exception ex)
+            {
+                var msg = "An unhandled exception occurred. The exception's message was [{0}]. Please check further output for more information.";
+                Console.Error.WriteLine(msg, ex.Message);
+                throw;
+            }
         }
     }
 }
