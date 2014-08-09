@@ -22,17 +22,20 @@
 // 
 // 
 using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using SharpConfig.Common;
 using SharpConfig.Config;
 using SharpConfig.Config.Implementation;
 using SharpConfig.Csv;
+using SharpConfig.Exceptions;
 
 namespace SharpConfig
 {
     class Program
     {
-        static int MainInternal(string[] args)
+        private static int MainInternal(string[] args)
         {
             var options = ProgramOptions.ParseCommandLine(args);
             if (options == null)
@@ -41,12 +44,61 @@ namespace SharpConfig
                 Console.Write(usage);
                 return 1;
             }
+            ILog log = new Log(options.Verbosity.Trim().ToLower() == "verbose");
+
+            var ok = options.PathsOk();
+            if (!ok)
+            {
+                var msg = @"There is a problem with the paths supplied. Please check the options below.
+                {0}";
+                msg = string.Format(msg, options);
+                log.Error(msg);
+                return 1;
+            }
+
+            log.Debug("Command line = [" + Environment.CommandLine + "]");
+            log.Debug("Raw Options = \r\n" + options.ToString(false) + "\r\n");
+            log.Debug("Computed Options = \r\n" + options.ToString(true) + "\r\n");
 
             var configFile = options.GetFullConfigurationSource();
-            var configContents = File.ReadAllText(configFile);
+            if (!File.Exists(configFile))
+            {
+                log.Error("It looks like the configuration source file [" + configFile + "] does not exist. This file is mandatory.");
+                return 1;
+            }
+
+            string configContents;
+            try
+            {
+                configContents = File.ReadAllText(configFile);
+            }
+            catch (Exception)
+            {
+                log.Error("It looks like something went wrong trying to read from the configuration source file [" + configFile + "]");
+                return 1;
+            }
 
             var csvOptions = new BasicCsvOptions(ownsTextReader: false, delimiter: options.CsvDelimiter, quote: options.CsvQuoteChar);
-            IConfigurationTopLevel configurationTopLevel = new DefaultConfigurationTopLevel(configContents, csvOptions);
+            IConfigurationTopLevel configurationTopLevel = null;
+
+            try
+            {
+                configurationTopLevel = new DefaultConfigurationTopLevel(configContents, csvOptions);
+            }
+            catch (ConfigurationLoadingException ex)
+            {
+                var msg = "An error occurred while reading the configuration file [" + configFile + "]";
+                msg += "\r\n" + "The error is: " + ex.Message;
+                log.Error(msg);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                var msg = "An unexpected error occurred while reading the configuration file [" + configFile + "]";
+                msg += "\r\n" + "The error is: " + ex.Message;
+                log.Error(msg);
+                return 1;
+            }
             var runner = new ProgramRunner(options, configurationTopLevel);
 
             var baseDir = options.GetFullBaseDirectory();
@@ -59,7 +111,7 @@ namespace SharpConfig
             return 0;
         }
         static int Main(string[] args)
-        {            
+        {
             try
             {
                 return MainInternal(args);
@@ -67,7 +119,8 @@ namespace SharpConfig
             catch (Exception ex)
             {
                 var msg = "An unhandled exception occurred. The exception's message was [{0}]. Please check further output for more information.";
-                Console.Error.WriteLine(msg, ex.Message);
+                msg += "\r\nThe command line was [{1}]";
+                Console.Error.WriteLine(msg, ex.Message, Environment.CommandLine);
                 throw;
             }
         }

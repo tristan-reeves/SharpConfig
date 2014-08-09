@@ -177,11 +177,43 @@ namespace SharpConfig
             var outputDirectoy = Path.Combine(inputDirectory, this.OutputDirectory);
             Directory.CreateDirectory(outputDirectoy);
         }
+        public new string ToString(bool calculated)
+        {
+            var result = string.Format(
+@"--output-transform ""{0}""
+--file-mask ""{1}""
+--base-directory ""{2}"" 
+--config-source ""{3}""
+--csv-quote ""{4}""
+--csv-delimiter ""{5}""
+--output-directory ""{6}""
+--default-environment ""{7}""
+--verbosity ""{8}""
+",
+                this.OutputTransform,
+                this.FileMask,
+                calculated ? this.GetFullBaseDirectory() : this.BaseDirectory,
+                calculated ? this.GetFullConfigurationSource() : this.ConfigSource,
+                this.CsvQuoteChar,
+                this.CsvDelimiter,
+                this.OutputDirectory,
+                this.DefaultEnvironment,
+                this.Verbosity);
+            return result;
+        }
+        public override string ToString()
+        {
+            return this.ToString(false);
+        }
 
         public static string ShortUsage()
         {
             var result =
-@"usage: SharpConfig.exe [Options]
+@"
+SharpConfig.exe
+Copyright (c) 2014 Tristan Reeves
+
+usage: SharpConfig.exe [Options]
 Options are as follows:
 
 --help
@@ -250,6 +282,20 @@ How much info do you want to see?
             catch
             {
                 return null;
+            }
+        }
+
+        public bool PathsOk()
+        {
+            try
+            {
+                var fullBase = this.GetFullBaseDirectory();
+                var fullConfigSource = this.GetFullConfigurationSource();
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

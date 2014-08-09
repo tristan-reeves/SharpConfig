@@ -24,26 +24,79 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using SharpConfig.Csv;
+using SharpConfig.Exceptions;
 
 namespace SharpConfig.Config.Implementation
 {
     public class DefaultConfigurationTopLevel : IConfigurationTopLevel
     {
         private readonly Dictionary<string, IConfigurationEnvironment> m_Environments = new Dictionary<string, IConfigurationEnvironment>();
+        private void VerifyEnvironments(string[] environmentNames)
+        {
+            var lowerCase = environmentNames.Select(x => x.Trim().ToLower()).ToArray();
+            if (lowerCase.Any(s => s == ""))
+            {
+                throw new BlankEnvironmentException();
+            }
 
+            var duplicates = lowerCase.GroupBy(x => x).Where(g => g.Count() > 1).Select(g => g.Key).ToArray();
+            if (duplicates.Any())
+            {
+                throw new DuplicateEnvironmentException(duplicates);
+            }
+
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var invalidEnvironments = lowerCase.Where(s => s.Intersect(invalidChars).Any()).ToArray();
+            if (invalidEnvironments.Any())
+            {
+                throw new InvalidCharEnvironmentException(invalidEnvironments);
+            }
+        }
+        private void VerifyKeys(List<string> allKeys)
+        {
+            var lowerCase = allKeys.Select(x => x.Trim().ToLower()).ToArray();
+            if (lowerCase.Any(s => s == ""))
+            {
+                throw new BlankKeyException();
+            }
+
+            var duplicates = lowerCase.GroupBy(x => x).Where(g => g.Count() > 1).Select(g => g.Key).ToArray();
+            if (duplicates.Any())
+            {
+                throw new DuplicateKeyException(duplicates);
+            }
+
+            var invalidChars = new[] { '}' };
+            var invalidKeys = lowerCase.Where(s => s.Intersect(invalidChars).Any()).ToArray();
+            if (invalidKeys.Any())
+            {
+                throw new InvalidCharKeyException(invalidKeys);
+            }
+        }
         private void ReadCsv(TextReader csvContents, BasicCsvOptions csvOptions)
         {
             using (var r = new BasicCsvReader(csvContents, csvOptions))
             {
                 if (!r.ReadLine()) return;
                 var environmentNames = r.GetValues().Skip(1).ToArray();
+                VerifyEnvironments(environmentNames);
+
                 var dicts = environmentNames.ToDictionary(x => x, x => new Dictionary<string, string>());
 
+                var allKeys = new List<string>();
+                var lineCounter = 0;
                 while (r.ReadLine())
                 {
+                    lineCounter++;
                     var values = r.GetValues();
-                    var key = values[0];
+                    var key = values[0].Trim().ToLower();
+                    allKeys.Add(key);
+                    if (values.Length != environmentNames.Length + 1)
+                    {
+                        throw new CsvWrongFieldCountException(lineCounter, values.Length, environmentNames.Length + 1);
+                    }
 
                     for (int i = 0; i < environmentNames.Length; i++)
                     {
@@ -52,6 +105,7 @@ namespace SharpConfig.Config.Implementation
                         dicts[environment].Add(key, keyLookupValue);
                     }
                 }
+                VerifyKeys(allKeys);
 
                 foreach (var kv in dicts)
                 {

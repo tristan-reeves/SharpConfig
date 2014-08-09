@@ -11,13 +11,13 @@
     <Artifacts>$(MSBuildProjectDirectory)\Artifacts</Artifacts>
   </PropertyGroup>
 
-  <Target Name="FullBuild">
+  <Target Name="FullBuildWithTests">
     <CallTarget Targets="CompileSolution"/>
     <CallTarget Targets="RunTests"/>
     <CallTarget Targets="CreateNugetPackage"/>
   </Target>
 
-  <Target Name="FullBuildNoTests">
+  <Target Name="FullBuild">
     <CallTarget Targets="CompileSolution"/>
     <CallTarget Targets="CreateNugetPackage"/>
   </Target>

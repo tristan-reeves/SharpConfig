@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build.xml = build.xml
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
-		ReadMe.txt = ReadMe.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7C5EF9FA-F21C-440A-810A-BBBC59C6A4B2}"
