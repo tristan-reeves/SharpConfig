@@ -70,10 +70,10 @@
     <Compile Include="ProgramOptions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Examples\Basic.bat" />
-    <None Include="Examples\ConfigurationA\app.template.config" />
-    <None Include="Examples\ConfigurationB\config.template.ini" />
-    <None Include="Examples\Source\Values.csv" />
+    <None Include="Examples\Basic\Basic.bat" />
+    <None Include="Examples\Basic\ConfigurationA\app.template.config" />
+    <None Include="Examples\Basic\ConfigurationB\config.template.ini" />
+    <None Include="Examples\Basic\Source\Values.csv" />
     <None Include="SharpConfig.nuspec">
       <SubType>Designer</SubType>
     </None>
