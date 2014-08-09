@@ -37,10 +37,10 @@ namespace SharpConfig.Csv
         public BasicCsvOptions(bool ownsTextReader = false, char delimiter = ',', char quote = '"', bool strictQuotes = false)
         {
             if (delimiter == quote) throw new ArgumentException("deimiter and quote must be different from each other");
-            if (delimiter == -1) throw new ArgumentException("deimiter must not be equal to -1");
+            if (delimiter == char.MaxValue) throw new ArgumentException("deimiter must not be equal to -1");
             if (delimiter == '\r') throw new ArgumentException("deimiter must not be equal to '\\r'");
             if (delimiter == '\n') throw new ArgumentException("deimiter must not be equal to '\\n'");
-            if (quote == -1) throw new ArgumentException("quote must not be equal to -1");
+            if (quote == char.MaxValue) throw new ArgumentException("quote must not be equal to -1");
             if (quote == '\r') throw new ArgumentException("quote must not be equal to '\\r'");
             if (quote == '\n') throw new ArgumentException("quote must not be equal to '\\n'");
 

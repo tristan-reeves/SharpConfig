@@ -183,12 +183,12 @@ How much info do you want to see?
                     return options;
                 case "--csv-quote":
                     var quote = (char)ConvertToChar(optionValue);
-                    if (quote == -1) return null;
+                    if (quote == char.MaxValue) return null;
                     options.m_CsvQuoteChar = (char)quote;
                     return options;
                 case "--csv-delimiter":
                     var delim = (char)ConvertToChar(optionValue);
-                    if (delim == -1) return null;
+                    if (delim == char.MaxValue) return null;
                     options.m_CsvDelimiter = (char)delim;
                     return options;
                 case "--output-directory":

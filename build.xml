@@ -2,21 +2,62 @@
 <Project
     xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
     ToolsVersion="4.0"
-    DefaultTargets="Build">
+    DefaultTargets="FullBuild">
 
   <PropertyGroup>
-    <NugetPackageRoot>$(MSBuildProjectDirectory)\packages</NugetPackageRoot>
-    <NUnitExe></NUnitExe>
-    <Solution>SharpConfig.sln</Solution>
+    <Solution>$(MSBuildProjectDirectory)\SharpConfig.sln</Solution>
     <Configuration>Release</Configuration>
     <BUILD_NUMBER>0.0.0.1</BUILD_NUMBER>
+    <Artifacts>$(MSBuildProjectDirectory)\Artifacts</Artifacts>
   </PropertyGroup>
 
-  <Target Name="CompileSolution">
-    <MSBuild Projects="$(Solution)" Targets="Rebuild"/>
+  <Target Name="FullBuild">
+    <CallTarget Targets="CompileSolution"/>
+    <CallTarget Targets="RunTests"/>
+    <CallTarget Targets="CreateNugetPackage"/>
+  </Target>
+
+  <Target Name="FullBuildNoTests">
+    <CallTarget Targets="CompileSolution"/>
+    <CallTarget Targets="CreateNugetPackage"/>
+  </Target>
+
+  <Target Name="CompileSolution" DependsOnTargets="AdjustVersion">
+    <MSBuild Projects="$(Solution)" Targets="Rebuild" Properties="Configuration=$(Configuration)"/>
   </Target>
 
   <Target Name="RunTests">
-    <Exec Command="nunit-console.exe" WorkingDirectory=""
+    <PropertyGroup>
+      <NugetPackageRoot>$(MSBuildProjectDirectory)\packages</NugetPackageRoot>
+      <NUnitExe>$(NugetPackageRoot)\NUnit.Runners.2.6.3\tools\nunit-console.exe</NUnitExe>
+      <TestProject>SharpConfig.UnitTests</TestProject>
+      <NUnitTarget>$(MSBuildProjectDirectory)\$(TestProject)\bin\$(Configuration)\$(TestProject).dll</NUnitTarget>
+    </PropertyGroup>
+
+    <Exec Command="$(NUnitExe) $(NUnitTarget)"/>
+  </Target>
+
+  <Target Name="CreateNugetPackage" DependsOnTargets="CleanArtifacts">
+    <PropertyGroup>
+      <NugetExe>$(MSBuildProjectDirectory)\.nuget\nuget.exe</NugetExe>
+      <NugetArgs>pack $(MSBuildProjectDirectory)\SharpConfig\SharpConfig.nuspec -OutputDirectory "$(Artifacts)" -Version $(BUILD_NUMBER) -Properties Configuration=$(Configuration)</NugetArgs>
+    </PropertyGroup>
+    <Exec Command="$(NugetExe) $(NugetArgs)"/>
+  </Target>
+
+  <Target Name="CleanArtifacts">
+    <RemoveDir Directories="$(Artifacts)"/>
+    <MakeDir Directories="$(Artifacts)"/>
+  </Target>
+
+  <Target Name="AdjustVersion">
+    <PropertyGroup>
+      <Quoted_BUILD_NUMBER>"$(BUILD_NUMBER)"</Quoted_BUILD_NUMBER>
+    </PropertyGroup>
+
+    <Exec Command="type LicenseHeader.cs > VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
+    <Exec Command="echo using System.Reflection; >> VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
+    <Exec Command="echo [assembly: AssemblyVersion($(Quoted_BUILD_NUMBER))] >> VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
+    <Exec Command="echo [assembly: AssemblyFileVersion($(Quoted_BUILD_NUMBER))] >> VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
   </Target>
 </Project>

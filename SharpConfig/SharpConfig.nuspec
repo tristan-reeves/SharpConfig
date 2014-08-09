@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SharpConfig</id>
+    <version>0.0.0.1</version>
+    <title>SharpConfig</title>
+    <authors>Tristan Reeves</authors>
+    <owners>Tristan Reeves</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Take the pain out of configuration</description>
+    <copyright>Copyright © Tristan Reeves 2014</copyright>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <dependencies />
+  </metadata>
+
+  <files>
+    <file src="bin\$configuration$\SharpConfig.exe" target="bin" />
+    <file src="bin\$configuration$\SharpConfig.pdb" target="bin" />
+    <file src="..\LICENSE.txt" target="LICENSE.txt" />
+    <file src="..\ReadMe.txt" target="ReadMe.txt" />
+  </files>
+</package>
