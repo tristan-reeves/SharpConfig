@@ -12,9 +12,9 @@ of input config file are completely replaced with text that may not even resembl
 
 Additionally the standard methods use xslt, and operate on xml files only; on the other hand other auxiliary file types may also benefit from
 transformation. However the xslt method does not support these. For example
--ini files
--batch files
--simple scripts
+-  ini files  
+-  batch files  
+-  simple scripts  
 
 The main benefit I see from this program is the increased simplicity in small-scale configuration management. It is clear what the final configuration files
 will look like, and to determine the actual values for a specific environment is a simple matter of looking them up from a tabular source (csv file). The same values
@@ -33,13 +33,14 @@ save that the placeholders will have been replaced by the appropriate values spe
 The program can then optionally copy one output file to another file. For example:
 take web.template.config as the input template file (NOT web.config, as will be explained below).
 running SharpConfig.exe might produce, for example, the following files:
-web.template.config=>
-web.dev.config
-web.uat.config
-web.prod.config
+web.template.config=>  
+web.dev.config  
+web.uat.config  
+web.prod.config  
 
-By default, SharpConfig will then copy 
-web.dev.config=>web.config
+By default, SharpConfig will then copy  
+web.dev.config=>web.config  
+
 Therefore in development, your web.config file will be a proper config file (no placeholders), with the correct values in place for the dev environment.
 This copying is controlled by the --default-enviornment option (by default it is set to "dev"). To disable copying, set it to "".
 
@@ -67,10 +68,11 @@ are also configurable.
 The contents of the csv file are arranged like this. The first column contains all the configuration keys, and the first row contains all the environments you will need values for.
 The rest of the cells contain values to be used for specific keys and environments. The top-left value is not used. For example:
 
-,dev,uat,prod
-db.server,localhost,uat-server,prod-server
-db.username,dev_user,uat_user,prod_user
-db.password,dev_pw,uat_pw,prod_pw
+,dev,uat,prod  
+db.server,localhost,uat-server,prod-server  
+db.username,dev_user,uat_user,prod_user  
+db.password,dev_pw,uat_pw,prod_pw  
+
 
 describes 3 environments (dev, uat, prod) and 3 configuration keys (db.server, db.username, db.password). The specific values for these
 keys in any given environment are found by cross-referencing the key with the envioronment. For example, the value for 'db.username' in 'uat'
