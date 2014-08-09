@@ -68,10 +68,10 @@ are also configurable.
 The contents of the csv file are arranged like this. The first column contains all the configuration keys, and the first row contains all the environments you will need values for.
 The rest of the cells contain values to be used for specific keys and environments. The top-left value is not used. For example:
 
-,dev,uat,prod  
-db.server,localhost,uat-server,prod-server  
-db.username,dev_user,uat_user,prod_user  
-db.password,dev_pw,uat_pw,prod_pw  
+,*dev*,*uat*,*prod*  
+*db.server*,localhost,uat-server,prod-server  
+*db.username*,dev_user,uat_user,prod_user  
+*db.password*,dev_pw,uat_pw,prod_pw  
 
 
 describes 3 environments (dev, uat, prod) and 3 configuration keys (db.server, db.username, db.password). The specific values for these
