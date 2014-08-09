@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 // 
 // 
-
 using System;
 using System.IO;
 using SharpConfig.Config;
