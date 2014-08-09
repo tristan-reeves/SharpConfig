@@ -10,13 +10,14 @@
     <description>Take the pain out of configuration</description>
     <copyright>Copyright © Tristan Reeves 2014</copyright>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/tristan-reeves/SharpConfig</projectUrl>
     <dependencies />
   </metadata>
 
   <files>
     <file src="bin\$configuration$\SharpConfig.exe" target="bin" />
     <file src="bin\$configuration$\SharpConfig.pdb" target="bin" />
-    <file src="..\LICENSE.txt" target="LICENSE.txt" />
-    <file src="..\ReadMe.txt" target="ReadMe.txt" />
+    <file src="..\LICENSE.txt"/>
+    <file src="..\ReadMe.txt"/>
   </files>
 </package>

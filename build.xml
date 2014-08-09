@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Solution>$(MSBuildProjectDirectory)\SharpConfig.sln</Solution>
     <Configuration>Release</Configuration>
-    <BUILD_NUMBER>0.0.0.1</BUILD_NUMBER>
+    <BUILD_NUMBER>0.1.0.0</BUILD_NUMBER>
     <Artifacts>$(MSBuildProjectDirectory)\Artifacts</Artifacts>
   </PropertyGroup>
 
@@ -53,11 +53,12 @@
   <Target Name="AdjustVersion">
     <PropertyGroup>
       <Quoted_BUILD_NUMBER>"$(BUILD_NUMBER)"</Quoted_BUILD_NUMBER>
+      <WorkingDir>$(MSBuildProjectDirectory)\Common</WorkingDir>
     </PropertyGroup>
 
-    <Exec Command="type LicenseHeader.cs > VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
-    <Exec Command="echo using System.Reflection; >> VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
-    <Exec Command="echo [assembly: AssemblyVersion($(Quoted_BUILD_NUMBER))] >> VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
-    <Exec Command="echo [assembly: AssemblyFileVersion($(Quoted_BUILD_NUMBER))] >> VersionInfo.cs" WorkingDirectory="$(MSBuildProjectDirectory)"/>
+    <Exec Command="type LicenseHeader.cs > VersionInfo.cs" WorkingDirectory="$(WorkingDir)"/>
+    <Exec Command="echo using System.Reflection; >> VersionInfo.cs" WorkingDirectory="$(WorkingDir)"/>
+    <Exec Command="echo [assembly: AssemblyVersion($(Quoted_BUILD_NUMBER))] >> VersionInfo.cs" WorkingDirectory="$(WorkingDir)"/>
+    <Exec Command="echo [assembly: AssemblyFileVersion($(Quoted_BUILD_NUMBER))] >> VersionInfo.cs" WorkingDirectory="$(WorkingDir)"/>
   </Target>
 </Project>

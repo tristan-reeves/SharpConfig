@@ -16,11 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		build.xml = build.xml
 		LICENSE.txt = LICENSE.txt
-		LicenseHeader.cs = LicenseHeader.cs
 		README.md = README.md
 		ReadMe.txt = ReadMe.txt
-		SharedInfo.cs = SharedInfo.cs
-		VersionInfo.cs = VersionInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7C5EF9FA-F21C-440A-810A-BBBC59C6A4B2}"
+	ProjectSection(SolutionItems) = preProject
+		Common\LicenseHeader.cs = Common\LicenseHeader.cs
+		Common\SharedInfo.cs = Common\SharedInfo.cs
+		Common\VersionInfo.cs = Common\VersionInfo.cs
 	EndProjectSection
 EndProject
 Global

@@ -36,10 +36,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedInfo.cs">
+    <Compile Include="..\Common\SharedInfo.cs">
       <Link>Properties\SharedInfo.cs</Link>
     </Compile>
-    <Compile Include="..\VersionInfo.cs">
+    <Compile Include="..\Common\VersionInfo.cs">
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Config\IConfigurationEnvironment.cs" />
@@ -70,7 +70,9 @@
     <Compile Include="ProgramOptions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SharpConfig.nuspec" />
+    <None Include="SharpConfig.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
