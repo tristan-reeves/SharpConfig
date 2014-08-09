@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project
+    xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+    ToolsVersion="4.0"
+    DefaultTargets="Build">
+
+  <PropertyGroup>
+    <NugetPackageRoot>$(MSBuildProjectDirectory)\packages</NugetPackageRoot>
+    <NUnitExe></NUnitExe>
+    <Solution>SharpConfig.sln</Solution>
+    <Configuration>Release</Configuration>
+    <BUILD_NUMBER>0.0.0.1</BUILD_NUMBER>
+  </PropertyGroup>
+
+  <Target Name="CompileSolution">
+    <MSBuild Projects="$(Solution)" Targets="Rebuild"/>
+  </Target>
+
+  <Target Name="RunTests">
+    <Exec Command="nunit-console.exe" WorkingDirectory=""
+  </Target>
+</Project>
