@@ -7,7 +7,7 @@
     <authors>Tristan Reeves</authors>
     <owners>Tristan Reeves</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Take the pain out of configuration</description>
+    <description>Easy to understand configuration. Just the raw exe and some examples.</description>
     <copyright>Copyright © Tristan Reeves 2014</copyright>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/tristan-reeves/SharpConfig</projectUrl>
