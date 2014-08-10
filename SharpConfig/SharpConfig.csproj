@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="ForNuget\SharpConfig.defaults.xml" />
     <Content Include="ForNuget\SharpConfig.extend.xml" />
+    <None Include="ForNuget\ConfigValues.csv" />
     <None Include="ForNuget\uninstall.ps1" />
     <None Include="ForNuget\install.ps1" />
     <None Include="SharpConfig.Runners.nuspec">

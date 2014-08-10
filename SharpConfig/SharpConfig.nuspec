@@ -21,7 +21,7 @@
     <file src="bin\$configuration$\SharpConfig.exe" target="bin\" />
     <file src="bin\$configuration$\SharpConfig.pdb" target="bin\" />
     <file src="ForNuget\SharpConfig.defaults.xml" target="bin\"/>
-    <file src="ForNuget\Examples\ConfigSource\ConfigValues.csv" target="bin\"/>
+    <file src="ForNuget\ConfigValues.csv" target="bin\"/>
 
     <file src="ForNuget\install.ps1" target="tools\"/>
     <file src="ForNuget\uninstall.ps1" target="tools\"/>
