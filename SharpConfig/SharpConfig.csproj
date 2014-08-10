@@ -84,6 +84,7 @@
     <None Include="Examples\Basic\ConfigurationA\app.template.config" />
     <None Include="Examples\Basic\ConfigurationB\config.template.ini" />
     <None Include="Examples\Basic\Source\Values.csv" />
+    <None Include="Examples\ConfigSource\ConfigValues.csv" />
     <None Include="SharpConfig.nuspec">
       <SubType>Designer</SubType>
     </None>

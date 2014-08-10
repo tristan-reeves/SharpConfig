@@ -19,6 +19,11 @@
     <file src="bin\$configuration$\SharpConfig.pdb" target="bin" />
     <file src="..\LICENSE.txt"/>
     <file src="..\ReadMe.md"/>
-    <file src="Examples\**\*.*" target="Examples" />
+
+    <file src="bin\$configuration$\SharpConfig.exe" target="content\SharpConfig\bin" />
+    <file src="bin\$configuration$\SharpConfig.pdb" target="content\SharpConfig\bin" />
+    <file src="..\LICENSE.txt" target="content\SharpConfig"/>
+    <file src="..\ReadMe.md" target="content\SharpConfig"/>
+    <file src="Examples\**\*.*" target="content\SharpConfig\Examples" />
   </files>
 </package>
