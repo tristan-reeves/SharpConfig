@@ -1,4 +1,4 @@
-﻿,dev,uat,"prod"
-"key1",dev-key1,uat-key1,prod-key1
-key2,"dev-key2",uat-key2,prod-key2
-qualified.key3,"dev-qualified.key3",uat-qualified.key3,prod-qualified.key3
+﻿,dev,uat,prod
+key1,dev-key1,uat-key1,prod-key1
+key2,dev-key2,uat-key2,prod-key2
+key3,dev-key3,uat-key3,prod-key3

@@ -86,7 +86,7 @@ namespace SharpConfig.Config.Implementation
                 var dicts = environmentNames.ToDictionary(x => x, x => new Dictionary<string, string>());
 
                 var allKeys = new List<string>();
-                var lineCounter = 0;
+                var lineCounter = 1;
                 while (r.ReadLine())
                 {
                     lineCounter++;

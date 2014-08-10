@@ -26,7 +26,7 @@ namespace SharpConfig.Exceptions
     public class CsvWrongFieldCountException : ConfigurationLoadingException
     {
         public CsvWrongFieldCountException(int lineNumber, int actualNumberOfFields, int expectedNumberOfFields)
-            : base(string.Format("Wrong Number Of Fields in line {0} of csv file. Expected {1} fields but found {2}", lineNumber, actualNumberOfFields, expectedNumberOfFields))
+            : base(string.Format("Wrong Number Of Fields in line {0} of csv file. Expected {2} fields but found {1}", lineNumber, actualNumberOfFields, expectedNumberOfFields))
         {
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>SharpConfig</id>
+    <id>SharpConfig.Runners</id>
     <version>0.0.0.1</version>
-    <title>SharpConfig</title>
+    <title>SharpConfig.Runners</title>
     <authors>Tristan Reeves</authors>
     <owners>Tristan Reeves</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -15,11 +15,10 @@
   </metadata>
 
   <files>
-    <file src="bin\$configuration$\SharpConfig.exe" target="content\SharpConfig\" />
-    <file src="bin\$configuration$\SharpConfig.pdb" target="content\SharpConfig\" />
-    <file src="..\LICENSE.txt" target="content\SharpConfig\"/>
-    <file src="..\ReadMe.md" target="content\SharpConfig\"/>
-    <file src="Examples\ConfigSource\ConfigValues.csv" target="content\SharpConfig\Samples\"/>
-    <file src="Examples\BuildEvents\PreBuildEvent.txt" target="content\SharpConfig\Samples\"/>
+    <file src="bin\$configuration$\SharpConfig.exe" target="bin" />    
+    <file src="bin\$configuration$\SharpConfig.pdb" target="bin" />    
+    <file src="..\LICENSE.txt"/>
+    <file src="..\ReadMe.md"/>
+    <file src="Examples\**\*" target="Examples" />
   </files>
 </package>

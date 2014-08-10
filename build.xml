@@ -14,12 +14,12 @@
   <Target Name="FullBuildWithTests">
     <CallTarget Targets="CompileSolution"/>
     <CallTarget Targets="RunTests"/>
-    <CallTarget Targets="CreateNugetPackage"/>
+    <CallTarget Targets="CreateNugetPackages"/>
   </Target>
 
   <Target Name="FullBuild">
     <CallTarget Targets="CompileSolution"/>
-    <CallTarget Targets="CreateNugetPackage"/>
+    <CallTarget Targets="CreateNugetPackages"/>
   </Target>
 
   <Target Name="CompileSolution" DependsOnTargets="AdjustVersion">
@@ -37,12 +37,15 @@
     <Exec Command="$(NUnitExe) $(NUnitTarget)"/>
   </Target>
 
-  <Target Name="CreateNugetPackage" DependsOnTargets="CleanArtifacts">
+  <Target Name="CreateNugetPackages" DependsOnTargets="CleanArtifacts">
     <PropertyGroup>
-      <NugetExe>$(MSBuildProjectDirectory)\.nuget\nuget.exe</NugetExe>
-      <NugetArgs>pack $(MSBuildProjectDirectory)\SharpConfig\SharpConfig.nuspec -OutputDirectory "$(Artifacts)" -Version $(BUILD_NUMBER) -Properties Configuration=$(Configuration)</NugetArgs>
+      <NugetCommand>$(MSBuildProjectDirectory)\.nuget\nuget.exe pack</NugetCommand>
+      <Package1>$(MSBuildProjectDirectory)\SharpConfig\SharpConfig.nuspec</Package1>
+      <Package2>$(MSBuildProjectDirectory)\SharpConfig\SharpConfig.Runners.nuspec</Package2>
+      <NugetOptions>-OutputDirectory "$(Artifacts)" -Version $(BUILD_NUMBER) -Properties Configuration=$(Configuration)</NugetOptions>
     </PropertyGroup>
-    <Exec Command="$(NugetExe) $(NugetArgs)"/>
+    <Exec Command="$(NugetCommand) $(Package1) $(NugetOptions)"/>
+    <Exec Command="$(NugetCommand) $(Package2) $(NugetOptions)"/>
   </Target>
 
   <Target Name="CleanArtifacts">

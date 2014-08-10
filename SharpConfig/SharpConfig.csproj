@@ -80,14 +80,19 @@
     <Compile Include="ProgramOptions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SharpConfig.Runners.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Examples\Basic\Basic.bat" />
     <None Include="Examples\Basic\ConfigurationA\app.template.config" />
     <None Include="Examples\Basic\ConfigurationB\config.template.ini" />
-    <None Include="Examples\Basic\Source\Values.csv" />
     <None Include="Examples\ConfigSource\ConfigValues.csv" />
     <None Include="SharpConfig.nuspec">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Examples\BuildEvents\PreBuildEvent.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
