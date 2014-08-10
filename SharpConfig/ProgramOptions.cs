@@ -177,7 +177,7 @@ namespace SharpConfig
             var outputDirectoy = Path.Combine(inputDirectory, this.OutputDirectory);
             Directory.CreateDirectory(outputDirectoy);
         }
-        public new string ToString(bool calculated)
+        public string ToString(bool calculated)
         {
             var result = string.Format(
 @"--output-transform ""{0}""
