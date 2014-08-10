@@ -16,8 +16,8 @@
     <CallTarget Targets="RunTests"/>
     <CallTarget Targets="CreateNugetPackages"/>
   </Target>
-
-  <Target Name="FullBuild">
+  
+  <Target Name="FullBuild">    
     <CallTarget Targets="CompileSolution"/>
     <CallTarget Targets="CreateNugetPackages"/>
   </Target>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project
+    xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+    ToolsVersion="4.0"
+    DefaultTargets="FullBuild">
+
+  <PropertyGroup>
+    <Solution>0</Solution>
+    <Solution>$(Solution) 1</Solution>
+    <Solution>$(Solution) 2</Solution>
+    <Solution>$(Solution) 3</Solution>
+  </PropertyGroup>
+  
+  <Target Name="FullBuild">
+    <PropertyGroup>
+      <Solution>---$(Solution)---</Solution>
+    </PropertyGroup>
+    <Message Text="$(Solution)"/>
+  </Target>
+
+  <Target Name="FullBuild2" AfterTargets="FullBuild">
+    <Message Text="$(Solution)"/>
+  </Target>
+</Project>

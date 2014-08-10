@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Override default values with any of the following properties-->
+  <PropertyGroup>
+    <!--<SharpConfig-OutputTransform>\.template\.=>.&lt;env&gt;.</SharpConfig-OutputTransform>-->
+    <!--<SharpConfig-FileMask>*.template.*</SharpConfig-FileMask>-->
+    <!--<SharpConfig-BaseDirectory></SharpConfig-BaseDirectory>-->
+    <!--<SharpConfig-ConfigSource></SharpConfig-ConfigSource>-->
+    <!--<SharpConfig-CsvQuote>"\""</SharpConfig-CsvQuote>-->
+    <!--<SharpConfig-CsvDelimiter>,</SharpConfig-CsvDelimiter>-->
+    <!--<SharpConfig-OutputDirectory>.</SharpConfig-OutputDirectory>-->
+    <!--<SharpConfig-DefaultEnvironment>dev</SharpConfig-DefaultEnvironment>-->
+    <!--<SharpConfig-Verbosity>detailed</SharpConfig-Verbosity>-->
+  </PropertyGroup>
+</Project>

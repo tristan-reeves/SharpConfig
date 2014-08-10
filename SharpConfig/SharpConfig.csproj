@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="c:\temp\SharpConfig.defaults.xml" Condition="Exists('c:\temp\SharpConfig.defaults.xml')" />
-  <Import Project="$(SolutionDir)SharpConfig.extend.xml" Condition="Exists('$(SolutionDir)SharpConfig.extend.xml')" />
-  <Import Project="$(ProjectDir)SharpConfig.extend.xml" Condition="Exists('$(ProjectDir)SharpConfig.extend.xml')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -83,21 +80,23 @@
     <Compile Include="ProgramOptions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SharpConfig.defaults.xml" />
-    <Content Include="SharpConfig.extend.xml" />
+    <Content Include="ForNuget\SharpConfig.defaults.xml" />
+    <Content Include="ForNuget\SharpConfig.extend.xml" />
+    <None Include="ForNuget\uninstall.ps1" />
+    <None Include="ForNuget\install.ps1" />
     <None Include="SharpConfig.Runners.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Examples\Basic\Basic.bat" />
-    <None Include="Examples\Basic\ConfigurationA\app.template.config" />
-    <None Include="Examples\Basic\ConfigurationB\config.template.ini" />
-    <None Include="Examples\ConfigSource\ConfigValues.csv" />
+    <None Include="ForNuget\Examples\Basic\Basic.bat" />
+    <None Include="ForNuget\Examples\Basic\ConfigurationA\app.template.config" />
+    <None Include="ForNuget\Examples\Basic\ConfigurationB\config.template.ini" />
+    <None Include="ForNuget\Examples\ConfigSource\ConfigValues.csv" />
     <None Include="SharpConfig.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Examples\BuildEvents\PreBuildEvent.txt" />
+    <Content Include="ForNuget\Examples\BuildEvents\PreBuildEvent.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

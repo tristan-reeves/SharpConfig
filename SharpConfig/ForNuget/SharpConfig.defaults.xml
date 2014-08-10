@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RunSharpConfig Condition="'$(RunSharpConfig)'==''">true</RunSharpConfig>
+    <SharpConfigImported>true</SharpConfigImported>
+    <SharpConfig-OutputTransform>\.template\.=>.&lt;env&gt;.</SharpConfig-OutputTransform>
+    <SharpConfig-FileMask>*.template.*</SharpConfig-FileMask>
+    <SharpConfig-BaseDirectory></SharpConfig-BaseDirectory>
+    <SharpConfig-ConfigSource></SharpConfig-ConfigSource>
+    <SharpConfig-CsvQuote>\"</SharpConfig-CsvQuote>
+    <SharpConfig-CsvDelimiter>,</SharpConfig-CsvDelimiter>
+    <SharpConfig-OutputDirectory>.</SharpConfig-OutputDirectory>
+    <SharpConfig-DefaultEnvironment>dev</SharpConfig-DefaultEnvironment>
+    <SharpConfig-Verbosity>detailed</SharpConfig-Verbosity>
+  </PropertyGroup>
+
+  <Target Name="RunSharpConfig" BeforeTargets="BeforeBuild" Condition="'$(RunSharpConfig)'=='true'">
+    <PropertyGroup>
+      <SharpConfig-ConfigSource Condition="'$(SharpConfig-ConfigSource)'==''">$(SolutionDir)ConfigValues.csv</SharpConfig-ConfigSource>
+      <SharpConfig-ConfigSource Condition="!Exists('$(SharpConfig-ConfigSource)')">$(ProjectDir)ConfigValues.csv</SharpConfig-ConfigSource>
+      <SharpConfig-ConfigSource Condition="!Exists('$(SharpConfig-ConfigSource)')"></SharpConfig-ConfigSource>
+
+      <SharpConfigExe>$(MSBuildThisFileDirectory)SharpConfig.exe</SharpConfigExe>
+      <localOptions>--output-transform "$(SharpConfig-OutputTransform)"</localOptions>
+      <localOptions>$(localOptions) --file-mask "$(SharpConfig-FileMask)"</localOptions>
+      <localOptions>$(localOptions) --base-directory "$(SharpConfig-BaseDirectory)"</localOptions>
+      <localOptions>$(localOptions) --config-source "$(SharpConfig-ConfigSource)"</localOptions>
+      <localOptions>$(localOptions) --csv-quote "$(SharpConfig-CsvQuote)"</localOptions>
+      <localOptions>$(localOptions) --csv-delimiter "$(SharpConfig-CsvDelimiter)"</localOptions>
+      <localOptions>$(localOptions) --output-directory "$(SharpConfig-OutputDirectory)"</localOptions>
+      <localOptions>$(localOptions) --default-environment "$(SharpConfig-DefaultEnvironment)"</localOptions>
+      <localOptions>$(localOptions) --verbosity "$(SharpConfig-Verbosity)"</localOptions>
+
+      <localWarning>
+        No config source file has been specified. In this case, SharpConfig will look for specific files.
+        They are [$(projectDir)ConfigValues.csv]
+        and [$(solutionDir)ConfigValues.csv]
+
+        You can find a prototype for this file at [$(MSBuildThisFileDirectory)ConfigValues.csv], please feel free to copy this
+        file to either location specified above.
+
+        Alternatively you can specify the file to be used in the msbuild property &lt;SharpConfig-ConfigSource&gt;. Either in the property file
+        [$(projectDir)SharpConfig.extend.xml]
+        or [$(solutionDir)SharpConfig.extend.xml]
+        or from the command line.
+      </localWarning>
+    </PropertyGroup>
+
+    <Exec Command="$(SharpConfigExe) $(localOptions)" WorkingDirectory="$(ProjectDir)" Condition="'$(SharpConfig-ConfigSource)'!=''"/>
+    <Warning Condition="'$(SharpConfig-ConfigSource)'==''" Text="$(localWarning)"/>
+  </Target>
+</Project>

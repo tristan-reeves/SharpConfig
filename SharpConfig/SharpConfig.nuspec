@@ -15,11 +15,17 @@
   </metadata>
 
   <files>
-    <file src="bin\$configuration$\SharpConfig.exe" target="content\SharpConfig\" />
-    <file src="bin\$configuration$\SharpConfig.pdb" target="content\SharpConfig\" />
-    <file src="..\LICENSE.txt" target="content\SharpConfig\"/>
-    <file src="..\ReadMe.md" target="content\SharpConfig\"/>
-    <file src="Examples\ConfigSource\ConfigValues.csv" target="content\SharpConfig\Samples\"/>
-    <file src="Examples\BuildEvents\PreBuildEvent.txt" target="content\SharpConfig\Samples\"/>
+    <file src="..\LICENSE.txt" target="LICENSE.txt"/>
+    <file src="..\ReadMe.md" target="ReadMe.md"/>
+
+    <file src="bin\$configuration$\SharpConfig.exe" target="bin\" />
+    <file src="bin\$configuration$\SharpConfig.pdb" target="bin\" />
+    <file src="ForNuget\SharpConfig.defaults.xml" target="bin\"/>
+    <file src="ForNuget\Examples\ConfigSource\ConfigValues.csv" target="bin\"/>
+
+    <file src="ForNuget\install.ps1" target="tools\"/>
+    <file src="ForNuget\uninstall.ps1" target="tools\"/>
+
+    <file src="ForNuget\SharpConfig.extend.xml" target="content\"/>
   </files>
 </package>
