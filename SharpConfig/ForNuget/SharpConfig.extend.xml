@@ -6,7 +6,7 @@
     <!--<SharpConfig-FileMask>*.template.*</SharpConfig-FileMask>-->
     <!--<SharpConfig-BaseDirectory></SharpConfig-BaseDirectory>-->
     <!--<SharpConfig-ConfigSource></SharpConfig-ConfigSource>-->
-    <!--<SharpConfig-CsvQuote>"\""</SharpConfig-CsvQuote>-->
+    <!--<SharpConfig-CsvQuote>\"</SharpConfig-CsvQuote>-->
     <!--<SharpConfig-CsvDelimiter>,</SharpConfig-CsvDelimiter>-->
     <!--<SharpConfig-OutputDirectory>.</SharpConfig-OutputDirectory>-->
     <!--<SharpConfig-DefaultEnvironment>dev</SharpConfig-DefaultEnvironment>-->

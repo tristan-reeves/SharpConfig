@@ -21,7 +21,7 @@
     $import = $msbuild.Xml.AddImport($extendPath)
     $import.Condition = "Exists('$extendPath')"
     
-    $extendPath = '$(ProjectDir)'+$package.Id + '.extend.xml';
+    $extendPath = '$(ProjectDir)SharpConfig\'+$package.Id + '.extend.xml';
     $import = $msbuild.Xml.AddImport($extendPath)
     $import.Condition = "Exists('$extendPath')"
 

@@ -16,16 +16,15 @@
 
   <Target Name="RunSharpConfig" BeforeTargets="BeforeBuild" Condition="'$(RunSharpConfig)'=='true'">
     <PropertyGroup>
-      <SharpConfig-ConfigSource Condition="'$(SharpConfig-ConfigSource)'==''">$(SolutionDir)ConfigValues.csv</SharpConfig-ConfigSource>
-      <SharpConfig-ConfigSource Condition="!Exists('$(SharpConfig-ConfigSource)')">$(ProjectDir)ConfigValues.csv</SharpConfig-ConfigSource>
-      <SharpConfig-ConfigSource Condition="!Exists('$(SharpConfig-ConfigSource)')"></SharpConfig-ConfigSource>
+      <SharpConfig-ConfigSource Condition="'$(SharpConfig-ConfigSource)'==''">$(ProjectDir)\SharpConfig\ConfigValues.csv</SharpConfig-ConfigSource>
+      <SharpConfig-ConfigSource Condition="!Exists('$(SharpConfig-ConfigSource)')">$(SolutionDir)ConfigValues.csv</SharpConfig-ConfigSource>
+      <SharpConfig-ConfigSource Condition="!Exists('$(SharpConfig-ConfigSource)')">$(MSBuildThisFileDirectory)ConfigValues.csv</SharpConfig-ConfigSource>
 
       <SharpConfigExe>$(MSBuildThisFileDirectory)SharpConfig.exe</SharpConfigExe>
       <localOptions>--output-transform "$(SharpConfig-OutputTransform)"</localOptions>
       <localOptions>$(localOptions) --file-mask "$(SharpConfig-FileMask)"</localOptions>
       <localOptions>$(localOptions) --base-directory "$(SharpConfig-BaseDirectory)"</localOptions>
-      <localOptions Condition="'$(SharpConfig-ConfigSource)'!=''">$(localOptions) --config-source "$(SharpConfig-ConfigSource)"</localOptions>
-      <localOptions Condition="'$(SharpConfig-ConfigSource)'==''">$(localOptions) --config-source "$(MSBuildThisFileDirectory)ConfigValues.csv"</localOptions>
+      <localOptions>$(localOptions) --config-source "$(SharpConfig-ConfigSource)"</localOptions>
       <localOptions>$(localOptions) --csv-quote "$(SharpConfig-CsvQuote)"</localOptions>
       <localOptions>$(localOptions) --csv-delimiter "$(SharpConfig-CsvDelimiter)"</localOptions>
       <localOptions>$(localOptions) --output-directory "$(SharpConfig-OutputDirectory)"</localOptions>
@@ -52,6 +51,6 @@
 
     <Message Text="$(SharpConfigExe) $(localOptions)"/>
     <Exec Command="$(SharpConfigExe) $(localOptions)" WorkingDirectory="$(ProjectDir)"/>
-    <Warning Condition="'$(SharpConfig-ConfigSource)'==''" Text="$(localWarning)"/>
+    <Warning Condition="[$(SharpConfig-ConfigSource)]==[$(MSBuildThisFileDirectory)ConfigValues.csv]" Text="$(localWarning)"/>
   </Target>
 </Project>

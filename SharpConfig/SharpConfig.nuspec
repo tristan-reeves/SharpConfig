@@ -26,6 +26,7 @@
     <file src="ForNuget\install.ps1" target="tools\"/>
     <file src="ForNuget\uninstall.ps1" target="tools\"/>
 
-    <file src="ForNuget\SharpConfig.extend.xml" target="content\"/>
+    <file src="ForNuget\SharpConfig.extend.xml" target="content\SharpConfig\"/>
+    <file src="ForNuget\ConfigValues.csv" target="content\SharpConfig\"/>
   </files>
 </package>

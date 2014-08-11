@@ -80,6 +80,7 @@
     <Compile Include="ProgramOptions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ForNuget\Readme.txt" />
     <Content Include="ForNuget\SharpConfig.defaults.xml" />
     <Content Include="ForNuget\SharpConfig.extend.xml" />
     <None Include="ForNuget\ConfigValues.csv" />
