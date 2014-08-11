@@ -28,5 +28,6 @@
 
     <file src="ForNuget\SharpConfig.extend.xml" target="content\SharpConfig\"/>
     <file src="ForNuget\ConfigValues.csv" target="content\SharpConfig\"/>
+    <file src="ForNuget\readme.txt" target="content\SharpConfig\"/>
   </files>
 </package>

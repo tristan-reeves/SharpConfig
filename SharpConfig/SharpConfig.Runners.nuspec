@@ -19,6 +19,6 @@
     <file src="bin\$configuration$\SharpConfig.pdb" target="bin" />    
     <file src="..\LICENSE.txt"/>
     <file src="..\ReadMe.md"/>
-    <file src="ForNuget\Examples\**\*" target="Examples" />
+    <file src="ForNuget\ConfigValues.csv" target="SampleConfigValues.csv" />
   </files>
 </package>

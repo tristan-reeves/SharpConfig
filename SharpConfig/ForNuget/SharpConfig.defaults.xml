@@ -36,14 +36,14 @@
         Therefore SharpConfig will use the file [$(MSBuildThisFileDirectory)ConfigValues.csv]
         
         In particular, SharpConfig could not find either of the default files:
-        [$(projectDir)ConfigValues.csv]
+        [$(projectDir)SharpConfig\ConfigValues.csv]
         and [$(solutionDir)ConfigValues.csv]
 
         You can find a prototype for either of these file at [$(MSBuildThisFileDirectory)ConfigValues.csv].
         Please feel free to copy this file to either location specified above.
 
         Alternatively you can specify the file to be used in the msbuild property &lt;SharpConfig-ConfigSource&gt;. Either in the property file
-        [$(projectDir)SharpConfig.extend.xml]
+        [$(projectDir)SharpConfig\SharpConfig.extend.xml]
         or [$(solutionDir)SharpConfig.extend.xml]
         or from the command line.
       </localWarning>
@@ -51,6 +51,6 @@
 
     <Message Text="$(SharpConfigExe) $(localOptions)"/>
     <Exec Command="$(SharpConfigExe) $(localOptions)" WorkingDirectory="$(ProjectDir)"/>
-    <Warning Condition="[$(SharpConfig-ConfigSource)]==[$(MSBuildThisFileDirectory)ConfigValues.csv]" Text="$(localWarning)"/>
+    <Warning Condition="'$(SharpConfig-ConfigSource)'=='$(MSBuildThisFileDirectory)ConfigValues.csv'" Text="$(localWarning)"/>
   </Target>
 </Project>

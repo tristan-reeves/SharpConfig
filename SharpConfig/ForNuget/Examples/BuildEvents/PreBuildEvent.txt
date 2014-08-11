@@ -1,5 +1,0 @@
-﻿#The following is an example of what you might use as a pre-build event to cause SharpConfig configuration to occur
-#This particular example expects a csv file called ConfigValues.csv to be located in the Solution Directory.
-#You can find a sample ConfigValues.csv file in the current folder.
-
-"$(ProjectDir)SharpConfig\SharpConfig.exe" --config-source "$(SolutionDir)ConfigValues.csv" --base-directory "$(ProjectDir) "
